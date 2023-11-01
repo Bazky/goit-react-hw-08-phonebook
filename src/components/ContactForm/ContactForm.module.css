@@ -1,0 +1,26 @@
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 400px;
+  height: 200px;
+  border: 1px solid black;
+}
+
+.containerForm {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.input {
+  width: 150px;
+  margin-top: 10px;
+}
+
+.button__form {
+  margin-top: 10px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: white;
+}

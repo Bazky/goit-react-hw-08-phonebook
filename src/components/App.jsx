@@ -9,6 +9,7 @@ import {
   deleteContact,
   setFilter,
 } from '../redux/actions';
+import { UserSignup } from './UserSingup/UserSignup';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -33,12 +34,13 @@ export const App = () => {
 
   return (
     <div>
-      <h1>Phonebook</h1>
+      <UserSignup />
+      {/* <h1>Phonebook</h1>
       <ContactForm contacts={contacts} onAddContact={handleAddContact} />
       <h2>Contacts</h2>
       <h5>Find contacts by name</h5>
       <Filter filter={filter} onFilterChange={handleFilterChange} />
-      <ContactList onDeleteContact={handleDeleteContact} />
+      <ContactList onDeleteContact={handleDeleteContact} /> */}
     </div>
   );
 };

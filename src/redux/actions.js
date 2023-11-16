@@ -1,14 +1,13 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import PropTypes from 'prop-types';
+import { API } from '../Api';
 
 export const setFilter = createAction('filter/set');
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async () => {
-    const response = await fetch(
-      'https://652eb7e40b8d8ddac0b1ccb0.mockapi.io/contacts'
-    );
+    const response = await fetch(`${API}/contacts`);
     if (!response.ok) {
       throw new Error('Failed to fetch contacts.');
     }
@@ -20,16 +19,13 @@ export const fetchContacts = createAsyncThunk(
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async newContact => {
-    const response = await fetch(
-      'https://652eb7e40b8d8ddac0b1ccb0.mockapi.io/contacts',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newContact),
-      }
-    );
+    const response = await fetch(`${API}/contacts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newContact),
+    });
     if (!response.ok) {
       throw new Error('Failed to add a contact.');
     }
@@ -41,12 +37,9 @@ export const addContact = createAsyncThunk(
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async contactId => {
-    const response = await fetch(
-      `https://652eb7e40b8d8ddac0b1ccb0.mockapi.io/contacts/${contactId}`,
-      {
-        method: 'DELETE',
-      }
-    );
+    const response = await fetch(`${API}/contacts/${contactId}`, {
+      method: 'DELETE',
+    });
     if (!response.ok) {
       throw new Error('Failed to delete the contact.');
     }

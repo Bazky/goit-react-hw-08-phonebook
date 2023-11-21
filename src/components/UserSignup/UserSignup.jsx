@@ -1,33 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { API } from 'Api';
+import { register } from 'redux/actions';
+import { useDispatch } from 'react-redux';
 
 export const UserSignup = () => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const signup = async () => {
-    try {
-      const response = await axios.post(
-        `${API}/users/signup`,
-        JSON.stringify({ username, password }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      return response.status === 201 ? setSuccess(true) : setSuccess(false);
-    } catch {
-      console.log('error');
-    }
+  const signup = () => {
+    dispatch(register({ username, email, password }));
+    setSuccess(true);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
-    signup();
   };
 
   return (
@@ -52,7 +41,7 @@ export const UserSignup = () => {
             <label>
               Email
               <input
-                type="text"
+                type="email"
                 value={email}
                 onChange={event => setEmail(event.target.value)}
               />
@@ -60,12 +49,12 @@ export const UserSignup = () => {
             <label>
               Password
               <input
-                type="text"
+                type="password"
                 value={password}
                 onChange={event => setPassword(event.target.value)}
               />
             </label>
-            <button type="button" onClick={signup}>
+            <button type="submit" onClick={signup}>
               Signup
             </button>
             <Link to="/login">Login</Link>

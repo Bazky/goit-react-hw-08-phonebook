@@ -2,10 +2,14 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { UserSignup } from './UserSignup/UserSignup';
 import { UserLogin } from './UserLogin/UserLogin';
-import { ContactList } from './ContactList/ContactList';
+import { useAuth } from '../auth/useAuth';
 
 export const Navigation = () => {
-  return (
+  const { isRefreshing } = useAuth();
+
+  return isRefreshing ? (
+    <b>Refreshin user...</b>
+  ) : (
     <BrowserRouter>
       <div>
         <nav>
@@ -15,7 +19,6 @@ export const Navigation = () => {
         <Routes>
           <Route path="/register" element={<UserSignup />} />
           <Route path="/login" element={<UserLogin />} />
-          <Route path="contacts" element={<ContactList />} />
         </Routes>
       </div>
     </BrowserRouter>

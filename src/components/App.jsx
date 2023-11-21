@@ -16,7 +16,7 @@ export const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts);
   const filter = useSelector(state => state.filter);
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState();
 
   useEffect(() => {
     dispatch(fetchContacts());

@@ -1,30 +1,19 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { API } from 'Api';
+import { useDispatch } from 'react-redux';
 
 export const UserLogin = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [success, setSuccess] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  const login = async () => {
-    try {
-      const response = await axios.post(
-        `${API}/users/login`,
-        JSON.stringify({ email, password }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-      return response.status === 201 ? setSuccess(true) : setSuccess(false);
-    } catch {
-      console.log('error');
-    }
+  const login = () => {
+    dispatch(login({ email, password }));
+    setSuccess(true);
   };
+
   const handleSubmit = event => {
     event.preventDefault();
-    login();
   };
 
   return (
@@ -34,7 +23,7 @@ export const UserLogin = () => {
         <label>
           Email
           <input
-            type="text"
+            type="email"
             value={email}
             onChange={event => setEmail(event.target.value)}
           />
@@ -42,7 +31,7 @@ export const UserLogin = () => {
         <label>
           Password
           <input
-            type="text"
+            type="password"
             value={password}
             onChange={event => setPassword(event.target.value)}
           />

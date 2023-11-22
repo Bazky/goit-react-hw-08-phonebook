@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-export const UserLogin = () => {
+export default function UserLogin() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,4 +42,4 @@ export const UserLogin = () => {
       </form>
     </div>
   );
-};
+}

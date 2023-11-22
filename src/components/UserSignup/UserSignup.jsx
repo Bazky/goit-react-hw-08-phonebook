@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { register } from 'redux/actions';
 import { useDispatch } from 'react-redux';
 
-export const UserSignup = () => {
+export default function UserSignup() {
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -17,6 +17,7 @@ export const UserSignup = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
+    signup();
   };
 
   return (
@@ -57,10 +58,10 @@ export const UserSignup = () => {
             <button type="submit" onClick={signup}>
               Signup
             </button>
-            <Link to="/login">Login</Link>
           </form>
+          <Link to="/login">Login</Link>
         </section>
       )}
     </>
   );
-};
+}

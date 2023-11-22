@@ -3,7 +3,7 @@ import React from 'react';
 export const UserMenu = () => {
   return (
     <div>
-      <p>mango@mail.com</p>
+      <p>email</p>
       <button>Logout</button>
     </div>
   );

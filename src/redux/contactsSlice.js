@@ -24,7 +24,7 @@ export const contactsSlice = createSlice({
       });
   },
 });
-export const { reducer: contactsReducer } = contactsSlice;
+export const contactsReducer = contactsSlice.reducer;
 
 contactsSlice.propTypes = {
   filter: PropTypes.string.isRequired,

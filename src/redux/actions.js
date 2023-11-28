@@ -2,9 +2,9 @@ import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 
-axios.defaults.baseURL = 'https://bazky.github.io/goit-react-hw-08-phonebook/';
+axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
-// const const const
+// const const const const
 const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
@@ -12,7 +12,7 @@ const setAuthHeader = token => {
 const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = null;
 };
-// const const const
+// const const const const
 
 export const setFilter = createAction('filter/set');
 
@@ -20,11 +20,7 @@ export const fetchContacts = createAsyncThunk(
   'contacts/fetchContacts',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/contacts', {
-        headers: {
-          Authorization: setAuthHeader(thunkAPI.getState().auth.token),
-        },
-      });
+      const response = await axios.get('/contacts', {});
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -35,29 +31,23 @@ export const fetchContacts = createAsyncThunk(
 export const addContact = createAsyncThunk(
   'contacts/addContact',
   async newContact => {
-    const response = await axios.post(
-      'https://connections-api.herokuapp.com/contacts',
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newContact),
-      }
-    );
+    const response = await axios.post('/contacts', {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newContact),
+    });
     if (!response.ok) {
       throw new Error('Failed to add a contact.');
     }
-    const data = await response.json();
-    return data;
+    return response.data;
   }
 );
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async contactId => {
-    const response = await axios.delete(
-      `https://connections-api.herokuapp.com/contacts/${contactId}`
-    );
+    const response = await axios.delete(`/contacts/${contactId}`);
     if (!response.ok) {
       throw new Error('Failed to delete the contact.');
     }
@@ -69,15 +59,10 @@ export const register = createAsyncThunk(
   'auth/register',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post(
-        'https://connections-api.herokuapp.com/users/signup',
-        JSON.stringify({ credentials }),
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        }
-      );
-
+      const response = await axios.post('/users/signup', credentials, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
       setAuthHeader(response.data.token);
       return response.data;
     } catch (error) {
@@ -90,12 +75,7 @@ export const logIn = createAsyncThunk(
   'auth/logIn',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post(
-        'https://connections-api.herokuapp.com/users/login',
-        credentials
-      );
-
-      setAuthHeader(response.data.token);
+      const response = await axios.post('/users/login', credentials);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -105,7 +85,7 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
   try {
-    await axios.post('https://connections-api.herokuapp.com/users/logout');
+    await axios.post('/users/logout');
     clearAuthHeader();
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -114,6 +94,13 @@ export const logOut = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
 
 setFilter.propTypes = {
   payload: PropTypes.string.isRequired,
+};
+
+fetchContacts.propTypes = {
+  payload: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 addContact.propTypes = {

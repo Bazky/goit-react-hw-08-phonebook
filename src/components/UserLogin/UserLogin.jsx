@@ -5,15 +5,10 @@ export default function UserLogin() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [success, setSuccess] = useState(false);
-
-  const login = () => {
-    dispatch(login({ email, password }));
-    setSuccess(true);
-  };
 
   const handleSubmit = event => {
     event.preventDefault();
+    dispatch(login({ email, password }));
   };
 
   return (
@@ -36,9 +31,7 @@ export default function UserLogin() {
             onChange={event => setPassword(event.target.value)}
           />
         </label>
-        <button type="button" onClick={login}>
-          Login
-        </button>
+        <button type="button">Login</button>
       </form>
     </div>
   );

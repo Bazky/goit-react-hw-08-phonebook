@@ -10,14 +10,10 @@ export default function UserSignup() {
   const [password, setPassword] = useState('');
   const [success, setSuccess] = useState(false);
 
-  const signup = () => {
-    dispatch(register({ username, email, password }));
-    setSuccess(true);
-  };
-
   const handleSubmit = event => {
     event.preventDefault();
-    signup();
+    dispatch(register({ username, email, password }));
+    setSuccess(true);
   };
 
   return (
@@ -55,9 +51,7 @@ export default function UserSignup() {
                 onChange={event => setPassword(event.target.value)}
               />
             </label>
-            <button type="submit" onClick={signup}>
-              Signup
-            </button>
+            <button type="submit">Signup</button>
           </form>
           <Link to="/login">Login</Link>
         </section>

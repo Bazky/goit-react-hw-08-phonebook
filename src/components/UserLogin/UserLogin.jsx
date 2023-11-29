@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { logIn } from 'redux/actions';
 
 export default function UserLogin() {
   const dispatch = useDispatch();
@@ -8,7 +9,7 @@ export default function UserLogin() {
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(login({ email, password }));
+    dispatch(logIn({ email, password }));
   };
 
   return (

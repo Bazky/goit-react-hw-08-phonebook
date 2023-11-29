@@ -10,6 +10,7 @@ import {
   setFilter,
 } from '../redux/actions';
 import { UserMenu } from './UserMenu/UserMenu';
+import { Navigation } from './Navigation';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ export const App = () => {
   return (
     <>
       <div>
+        <Navigation />
         <UserMenu />
         <h1>Phonebook</h1>
         <ContactForm contacts={contacts} onAddContact={handleAddContact} />

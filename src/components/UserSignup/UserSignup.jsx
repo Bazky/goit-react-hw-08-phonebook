@@ -16,12 +16,6 @@ export default function UserSignup() {
 
   return (
     <>
-      {/* {success ? (
-        <section>
-          <h1>Success!</h1>
-          <Link to="/login">Login</Link>
-        </section>
-      ) : ( */}
       <section>
         <h1>Signup</h1>
         <form onSubmit={handleSubmit}>

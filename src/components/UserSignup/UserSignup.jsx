@@ -5,13 +5,13 @@ import { useDispatch } from 'react-redux';
 
 export default function UserSignup() {
   const dispatch = useDispatch();
-  const [username, setUsername] = useState('');
+  const [name, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(register({ username, email, password }));
+    dispatch(register({ name, email, password }));
   };
 
   return (
@@ -23,7 +23,7 @@ export default function UserSignup() {
             Username
             <input
               type="text"
-              value={username}
+              value={name}
               onChange={event => setUsername(event.target.value)}
             />
           </label>

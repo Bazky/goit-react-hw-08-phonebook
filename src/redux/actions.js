@@ -61,7 +61,6 @@ export const register = createAsyncThunk(
     try {
       const response = await axios.post('/users/signup', credentials, {
         headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
       });
       setAuthHeader(response.data.token);
       return response.data;
@@ -71,8 +70,8 @@ export const register = createAsyncThunk(
   }
 );
 
-export const logIn = createAsyncThunk(
-  'auth/logIn',
+export const login = createAsyncThunk(
+  'auth/login',
   async (credentials, thunkAPI) => {
     try {
       const response = await axios.post('/users/login', credentials);
@@ -83,7 +82,7 @@ export const logIn = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
+export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await axios.post('/users/logout');
     clearAuthHeader();
@@ -91,10 +90,6 @@ export const logOut = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
-
-setFilter.propTypes = {
-  payload: PropTypes.string.isRequired,
-};
 
 fetchContacts.propTypes = {
   payload: PropTypes.shape({
@@ -122,14 +117,14 @@ register.propTypes = {
   }).isRequired,
 };
 
-logIn.propTypes = {
+login.propTypes = {
   payload: PropTypes.shape({
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,
   }).isRequired,
 };
 
-logOut.propTypes = {
+logout.propTypes = {
   payload: PropTypes.shape({
     email: PropTypes.string.isRequired,
     password: PropTypes.string.isRequired,

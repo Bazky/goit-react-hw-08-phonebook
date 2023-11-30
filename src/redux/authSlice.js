@@ -1,32 +1,31 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { logIn, register, logOut } from './actions';
+import { login, register, logout } from './actions';
 import PropTypes from 'prop-types';
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState: {
     user: {
-      name: null,
-      email: null,
+      name: '',
+      email: '',
+      password: '',
     },
     token: null,
     isLoggedIn: false,
-    isRefreshing: false,
   },
   reducers: {},
   extraReducers: builder => {
     builder
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = action.payload;
+        state.token = action.payload;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.token = action.payload;
         state.isLoggedIn = true;
       })
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isLoggedIn = true;
-      })
-      .addCase(logOut.fulfilled, (state, action) => {
+      .addCase(logout.fulfilled, (state, action) => {
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
@@ -39,8 +38,9 @@ authSlice.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string,
     email: PropTypes.string,
+    password: PropTypes.string,
   }),
+
   token: PropTypes.string,
   isLoggedIn: PropTypes.bool,
-  isRefreshing: PropTypes.bool,
 };

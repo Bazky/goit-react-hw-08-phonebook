@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { logIn } from 'redux/actions';
+import { login } from 'redux/actions';
+import { useNavigate } from 'react-router';
 
 export default function UserLogin() {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(logIn({ email, password }));
+    dispatch(login({ email, password }));
+    console.log(navigate('/contacts'));
   };
 
   return (
@@ -32,7 +35,7 @@ export default function UserLogin() {
             onChange={event => setPassword(event.target.value)}
           />
         </label>
-        <button type="button">Login</button>
+        <button type="submit">Login</button>
       </form>
     </div>
   );

@@ -11,11 +11,13 @@ import {
 } from '../redux/actions';
 import { UserMenu } from './UserMenu/UserMenu';
 import { Navigation } from './Navigation';
+import { useAuth } from '../auth/useAuth';
 
 export const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts);
   const filter = useSelector(state => state.filter);
+  const { isLoggedIn } = useAuth();
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -35,16 +37,19 @@ export const App = () => {
 
   return (
     <>
-      <div>
+      {isLoggedIn ? (
+        <div>
+          <UserMenu />
+          <h1>Phonebook</h1>
+          <ContactForm contacts={contacts} onAddContact={handleAddContact} />
+          <h2>Contacts</h2>
+          <h5>Find contacts by name</h5>
+          <Filter filter={filter} onFilterChange={handleFilterChange} />
+          <ContactList onDeleteContact={handleDeleteContact} />
+        </div>
+      ) : (
         <Navigation />
-        <UserMenu />
-        <h1>Phonebook</h1>
-        <ContactForm contacts={contacts} onAddContact={handleAddContact} />
-        <h2>Contacts</h2>
-        <h5>Find contacts by name</h5>
-        <Filter filter={filter} onFilterChange={handleFilterChange} />
-        <ContactList onDeleteContact={handleDeleteContact} />
-      </div>
+      )}
     </>
   );
 };

@@ -11,16 +11,13 @@ export default function UserLogin() {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/contacts');
-    }
-  }, [isLoggedIn]);
-
   const handleSubmit = async event => {
     event.preventDefault();
     try {
       await dispatch(login({ email, password }));
+      if (isLoggedIn) {
+        navigate('/contacts');
+      }
     } catch (error) {
       console.error('Login failed:', error.message);
     }

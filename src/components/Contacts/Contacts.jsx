@@ -10,7 +10,7 @@ import {
   setFilter,
 } from '../../redux/actions';
 
-export const Contacts = () => {
+export default function Contacts() {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.contacts);
   const filter = useSelector(state => state.filter);
@@ -41,4 +41,4 @@ export const Contacts = () => {
       <ContactList onDeleteContact={handleDeleteContact} />
     </div>
   );
-};
+}

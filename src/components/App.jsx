@@ -1,4 +1,4 @@
-import { Contacts } from './Contacts/Contacts';
+import Contacts from './Contacts/Contacts';
 import { UserMenu } from './UserMenu/UserMenu';
 import { useAuth } from '../auth/useAuth';
 import { Navigation } from './Navigation';

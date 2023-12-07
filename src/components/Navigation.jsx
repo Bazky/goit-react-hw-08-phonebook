@@ -2,9 +2,9 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 
+const Contacts = React.lazy(() => import('./Contacts/Contacts'));
 const UserSignup = React.lazy(() => import('./UserSignup/UserSignup'));
 const UserLogin = React.lazy(() => import('./UserLogin/UserLogin'));
-const Contacts = React.lazy(() => import('./Contacts/Contacts'));
 
 export const Navigation = () => {
   return (

@@ -2,9 +2,9 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { PrivateRoute } from './PrivateRoute';
 
-const ContactList = lazy(() => import('./ContactList/ContactList'));
 const UserSignup = React.lazy(() => import('./UserSignup/UserSignup'));
 const UserLogin = React.lazy(() => import('./UserLogin/UserLogin'));
+const Contacts = React.lazy(() => import('./Contacts/Contacts'));
 
 export const Navigation = () => {
   return (
@@ -21,7 +21,7 @@ export const Navigation = () => {
             <Route
               path="/contacts"
               element={
-                <PrivateRoute element={<ContactList />} redirect="/login" />
+                <PrivateRoute element={<Contacts />} redirect="/login" />
               }
             />
           </Routes>

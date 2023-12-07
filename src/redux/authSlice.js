@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login, register, logout } from './actions';
-import PropTypes from 'prop-types';
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -33,14 +32,3 @@ export const authSlice = createSlice({
   },
 });
 export const authReducer = authSlice.reducer;
-
-authSlice.propTypes = {
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    email: PropTypes.string,
-    password: PropTypes.string,
-  }),
-
-  token: PropTypes.string,
-  isLoggedIn: PropTypes.bool,
-};

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import PropTypes from 'prop-types';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -12,6 +11,7 @@ const setAuthHeader = token => {
 const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = null;
 };
+
 // const const const const
 
 export const setFilter = createAction('filter/set');
@@ -30,28 +30,32 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async newContact => {
-    const response = await axios.post('/contacts', {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newContact),
-    });
-    if (!response.ok) {
-      throw new Error('Failed to add a contact.');
+  async (newContact, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        '/contacts',
+        JSON.stringify(newContact),
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-    return response.data;
   }
 );
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
-  async contactId => {
-    const response = await axios.delete(`/contacts/${contactId}`);
-    if (!response.ok) {
-      throw new Error('Failed to delete the contact.');
+  async (contactId, thunkAPI) => {
+    try {
+      await axios.delete(`/contacts/${contactId}`);
+      return contactId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-    return contactId;
   }
 );
 
@@ -92,42 +96,19 @@ export const logout = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   }
 });
 
-fetchContacts.propTypes = {
-  payload: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-  }).isRequired,
-};
+export const current = createAsyncThunk('auth/current', async (_, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const persistedToken = state.auth.token;
 
-addContact.propTypes = {
-  payload: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-  }).isRequired,
-};
+  if (persistedToken === null) {
+    return thunkAPI.rejectWithValue();
+  }
 
-deleteContact.propTypes = {
-  payload: PropTypes.string.isRequired,
-};
-
-register.propTypes = {
-  payload: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-login.propTypes = {
-  payload: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-  }).isRequired,
-};
-
-logout.propTypes = {
-  payload: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string.isRequired,
-  }).isRequired,
-};
+  try {
+    setAuthHeader(response.data.token);
+    const response = await axios.get('/users/current');
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});

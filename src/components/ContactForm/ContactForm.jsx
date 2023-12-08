@@ -29,7 +29,7 @@ export const ContactForm = () => {
       if (existingContact) {
         alert(`${name} is already in contacts.`);
       } else {
-        dispatch(addContact({ name: name.trim(), number }));
+        dispatch(addContact({ name: name.trim(), number: number.trim() }));
         setName('');
         setNumber('');
       }

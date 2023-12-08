@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchContacts, addContact, deleteContact, setFilter } from './actions';
-import PropTypes from 'prop-types';
 
 export const contactsSlice = createSlice({
   name: 'phonebook',
@@ -25,14 +24,3 @@ export const contactsSlice = createSlice({
   },
 });
 export const contactsReducer = contactsSlice.reducer;
-
-contactsSlice.propTypes = {
-  filter: PropTypes.string.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-    })
-  ),
-};

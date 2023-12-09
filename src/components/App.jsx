@@ -1,33 +1,34 @@
-import { useDispatch } from 'react-redux';
-import Contacts from './Contacts/Contacts';
-import { UserMenu } from './UserMenu/UserMenu';
-import { useAuth } from '../auth/useAuth';
 import { Navigation } from './Navigation';
-import { useEffect } from 'react';
-import { current } from '../redux/actions';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { PrivateRoute } from './PrivateRoute';
+
+const Contacts = lazy(() => import('./Contacts/Contacts'));
+const UserSignup = lazy(() => import('./UserSignup/UserSignup'));
+const UserLogin = lazy(() => import('./UserLogin/UserLogin'));
 
 export const App = () => {
-  const { isLoggedIn, isRefreshing } = useAuth();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(current());
-  }, [dispatch]);
-
-  if (isRefreshing) {
-    return <p>Refreshing...</p>;
-  }
-
   return (
     <>
-      {isLoggedIn === true ? (
+      <BrowserRouter>
         <div>
-          <UserMenu />
-          <Contacts />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Navigation />} />
+              <Route
+                path="/contacts"
+                element={
+                  <PrivateRoute>
+                    <Contacts />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/register" element={<UserSignup />} />
+              <Route path="/login" element={<UserLogin />} />
+            </Routes>
+          </Suspense>
         </div>
-      ) : (
-        <Navigation />
-      )}
+      </BrowserRouter>
     </>
   );
 };

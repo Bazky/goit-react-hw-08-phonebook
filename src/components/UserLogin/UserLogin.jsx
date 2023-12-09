@@ -14,6 +14,8 @@ export default function UserLogin() {
   useEffect(() => {
     if (isLoggedIn) {
       navigate('/contacts');
+    } else {
+      navigate('/login');
     }
   }, [isLoggedIn, navigate]);
 

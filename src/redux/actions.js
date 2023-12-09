@@ -106,7 +106,7 @@ export const current = createAsyncThunk('auth/current', async (_, thunkAPI) => {
 
   try {
     const response = await axios.get('/users/current');
-    setAuthHeader(response.data.token);
+    setAuthHeader(persistedToken);
     return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);

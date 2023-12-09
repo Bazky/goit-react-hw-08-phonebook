@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ContactForm } from '../ContactForm/ContactForm';
 import { ContactList } from '../ContactList/ContactList';
 import { Filter } from '../Filter/Filter';
+import { UserMenu } from '../UserMenu/UserMenu';
 import {
   fetchContacts,
   addContact,
   deleteContact,
   setFilter,
 } from '../../redux/actions';
+import { current } from '../../redux/actions';
 
 export default function Contacts() {
   const dispatch = useDispatch();
@@ -17,6 +19,7 @@ export default function Contacts() {
 
   useEffect(() => {
     dispatch(fetchContacts());
+    dispatch(current());
   }, [dispatch]);
 
   const handleAddContact = newContact => {
@@ -33,6 +36,7 @@ export default function Contacts() {
 
   return (
     <div>
+      <UserMenu />
       <h1>Phonebook</h1>
       <ContactForm contacts={contacts} onAddContact={handleAddContact} />
       <h2>Contacts</h2>

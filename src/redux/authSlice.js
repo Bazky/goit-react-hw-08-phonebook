@@ -50,19 +50,16 @@ export const authSlice = createSlice({
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
-        state.isRefreshing = true;
       })
       .addCase(current.fulfilled, (state, action) => {
         state.user = action.payload;
         state.token = action.payload;
         state.isLoggedIn = true;
-        state.isRefreshing = false;
       })
       .addCase(current.rejected, (state, action) => {
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
-        state.isRefreshing = false;
       });
   },
 });

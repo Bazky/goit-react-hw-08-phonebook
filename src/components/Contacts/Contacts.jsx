@@ -10,7 +10,6 @@ import {
   deleteContact,
   setFilter,
 } from '../../redux/actions';
-import { current } from '../../redux/actions';
 
 export default function Contacts() {
   const dispatch = useDispatch();
@@ -19,7 +18,6 @@ export default function Contacts() {
 
   useEffect(() => {
     dispatch(fetchContacts());
-    dispatch(current());
   }, [dispatch]);
 
   const handleAddContact = newContact => {
